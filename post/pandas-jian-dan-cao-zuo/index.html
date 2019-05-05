@@ -1,0 +1,678 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Pandas 简单操作 | 郝云飞的学习笔记</title>
+<link rel="shortcut icon" href="https://BBBigFly.github.io/favicon.ico?v=1557060815881">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" href="https://BBBigFly.github.io/styles/main.css">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
+
+
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://BBBigFly.github.io">
+  <img class="avatar" src="https://BBBigFly.github.io/images/avatar.png?v=1557060815881" alt="">
+  </a>
+  <h1 class="site-title">
+    郝云飞的学习笔记
+  </h1>
+  <p class="site-description">
+    Stay Hungry Stay Foolish
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+      
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Pandas 简单操作
+            </h2>
+            <div class="post-info">
+              <time class="post-time">
+                · 2019-05-05 ·
+              </time>
+              
+            </div>
+            
+            <div class="post-content">
+              <h2 id="一-数据结构">一、数据结构</h2>
+<p><em>Pandas</em>三个数据结构：</p>
+<ul>
+<li>系列（<code>Series</code>）</li>
+<li>数据帧（<code>DataFrame</code>）</li>
+<li>面板（<code>Pannel</code>）</li>
+</ul>
+<p>所有Pandas数据结构是值可变的(可以更改)，除了系列都是大小可变的。系列是大小不变的。</p>
+<blockquote>
+<p>注：<code>DataFrame</code>被广泛使用，是最重要的数据结构之一。面板使用少得多。</p>
+</blockquote>
+<h3 id="1-系列">1. 系列</h3>
+<p>系列是具有均匀数据的一组数据结构。例如：
+10|23|56|61|55
+---|:--:|---:</p>
+<h3 id="2-数据帧">2. 数据帧</h3>
+<p>数据帧是一个具有异构数据的二维数组。例如：</p>
+<table>
+<thead>
+<tr>
+<th>姓名</th>
+<th style="text-align:center">球队</th>
+<th style="text-align:right">号码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>勒布朗詹姆斯</td>
+<td style="text-align:center">湖人</td>
+<td style="text-align:right">23</td>
+</tr>
+<tr>
+<td>詹姆斯哈登</td>
+<td style="text-align:center">火箭</td>
+<td style="text-align:right">13</td>
+</tr>
+<tr>
+<td>威斯布鲁克</td>
+<td style="text-align:center">雷霆</td>
+<td style="text-align:right">0</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3面板">3.面板</h3>
+<p>面板是具有异构数据的三维数据结构。在图形表示中很难表示面板。但是一个面板可以说明为DataFrame的容器。</p>
+<hr>
+<h2 id="二-简单入门">二、简单入门</h2>
+<h3 id="测试环境">测试环境</h3>
+<p>导入相关包，测试环境</p>
+<pre><code>import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+print(&quot;Hello Pandas&quot;)
+</code></pre>
+<h3 id="创建系列series">创建系列(<code>Series</code>)</h3>
+<ul>
+<li>列表创建系列</li>
+</ul>
+<pre><code>import pandas as pd
+import numpy as np
+
+s = pd.Series([1,3,5,np.nan,6,8])
+print(s)
+</code></pre>
+<p>执行结果：</p>
+<blockquote>
+<p>0    1.0
+1    3.0
+2    5.0
+3    NaN
+4    6.0
+5    8.0
+dtype: float64</p>
+</blockquote>
+<h3 id="创建数据帧dataframe">创建数据帧（<code>DataFrame</code>）</h3>
+<ul>
+<li><code>numpy</code>创建系列</li>
+</ul>
+<pre><code>import pandas as pd
+import numpy as np
+
+dates = pd.date_range('20190428', periods=7)
+print(dates)
+print(&quot;--&quot;*16)
+df = pd.DataFrame(np.random.randn(7,4), index=dates, columns=list('ABCD'))
+print(df)
+</code></pre>
+<p>执行结果：</p>
+<blockquote>
+<p>DatetimeIndex(['2019-04-28', '2019-04-29', '2019-04-30', '2019-05-01',
+'2019-05-02', '2019-05-03', '2019-05-04'],          dtype='datetime64[ns]', freq='D')<br>
+---------------------------------------------------------------------
+A         B         C         D
+2019-04-28 -0.108160 -0.587222  1.367275  1.613051
+2019-04-29 -0.979325  1.089148 -0.095158 -0.411972
+2019-04-30  0.510465  0.299216 -0.197512  2.006332
+2019-05-01 -0.994908  2.020983  0.714062  1.631477
+2019-05-02  1.413854  0.138260 -0.264254  2.399627
+2019-05-03  0.133428  1.102693 -0.887193  0.570622
+2019-05-04 -0.956033  0.424398 -0.341540 -1.409343</p>
+</blockquote>
+<ul>
+<li>字典创建系列</li>
+</ul>
+<pre><code>import pandas as pd
+import numpy as np
+
+df2 = pd.DataFrame({ 'A' : 1.,
+                     'B' : pd.Timestamp('20190428'),
+                     'C' : pd.Series(1,index=list(range(4)),dtype='float32'),
+                     'D' : np.array([3] * 4,dtype='int32'),
+                     'E' : pd.Categorical([&quot;test&quot;,&quot;train&quot;,&quot;test&quot;,&quot;train&quot;]),
+                     'F' : 'finn' })
+print(df2)
+</code></pre>
+<p>执行结果：
+&gt; A          B    C  D      E     F
+0  1.0 2019-04-28  1.0  3   test  finn
+1  1.0 2019-04-28  1.0  3  train  finn
+2  1.0 2019-04-28  1.0  3   test  finn
+3  1.0 2019-04-28  1.0  3  train  finn</p>
+<h3 id="查看数据">查看数据</h3>
+<p>查看数据帧首部和尾部数据行：</p>
+<pre><code>import pandas as pd
+import numpy as np
+
+dates = pd.date_range('20190428', periods=7)
+df = pd.DataFrame(np.random.randn(7,4), index=dates, columns=list('ABCD'))
+print(df.head(1))
+print(df.tail(3))
+</code></pre>
+<p>执行结果：
+&gt;A         B         C         D
+2019-04-28 -1.329916  0.959552 -0.759813 -1.013771
+A         B         C         D
+2019-05-02  1.403017  0.268799 -0.892387 -0.107153
+2019-05-03  0.215025 -0.123495 -2.232391  1.265889
+2019-05-04  0.882445 -0.007003  1.371226 -0.346610</p>
+<p>显示索引，列和底层numpy数据：</p>
+<pre><code>import pandas as pd
+import numpy as np
+
+dates = pd.date_range('20190428', periods=7)
+df = pd.DataFrame(np.random.randn(7,4), index=dates, columns=list('ABCD'))
+print(&quot;index is :&quot; )
+print(df.index)
+print(&quot;columns is :&quot; )
+print(df.columns)
+print(&quot;values is :&quot; )
+print(df.values)
+</code></pre>
+<p>执行结果：</p>
+<blockquote>
+<p>index is :
+DatetimeIndex(['2019-04-28', '2019-04-29', '2019-04-30', '2019-05-01',
+'2019-05-02', '2019-05-03', '2019-05-04'],
+dtype='datetime64[ns]', freq='D')
+columns is :
+Index([u'A', u'B', u'C', u'D'], dtype='object')
+values is :
+[[-1.74035619  0.93334097 -1.09301986 -0.78762794]
+[ 0.36756221  0.18524094  0.29245922 -0.27164856]
+[-0.99908037  0.93122425  0.60297039  0.82670895]
+[ 0.86642755 -0.82331904  1.57817908  0.7991537 ]
+[-0.03135306  0.27513503  0.40749527 -0.82494183]
+[ 1.81255655 -0.70617972 -0.86322315  1.16427492]
+[-1.07389856  0.38982747  0.92071672  0.14529167]]</p>
+</blockquote>
+<p>描述显示数据的快速统计摘要:</p>
+<pre><code>import pandas as pd
+import numpy as np
+
+dates = pd.date_range('20190428', periods=7)
+df = pd.DataFrame(np.random.randn(7,4), index=dates, columns=list('ABCD'))
+print(df.describe())
+</code></pre>
+<p>执行结果：</p>
+<blockquote>
+<p>A         B         C         D
+count  7.000000  7.000000  7.000000  7.000000
+mean  -0.116580 -0.053625 -0.130308 -0.325981
+std    0.738585  1.047746  1.265855  1.128592
+min   -1.044345 -1.514957 -1.651968 -2.034169
+25%   -0.604876 -0.551135 -0.846330 -0.972007
+50%   -0.239000 -0.211366 -0.292371 -0.366855
+75%    0.356480  0.299337  0.299893  0.572748
+max    0.964079  1.854547  2.125056  0.917675</p>
+</blockquote>
+<p>行列转置：</p>
+<pre><code>import pandas as pd
+import numpy as np
+
+dates = pd.date_range('20190428', periods=7)
+df = pd.DataFrame(np.random.randn(7,4), index=dates, columns=list('ABCD'))
+print(df.T)
+</code></pre>
+<p>执行结果：</p>
+<blockquote>
+<p>2019-04-28  2019-04-29     ...      2019-05-03  2019-05-04
+A   -0.900817    1.741857     ...        0.084153   -0.795305
+B   -0.018149   -0.887465     ...       -0.134664   -0.587248
+C    1.138971   -0.247864     ...        1.034917    0.072357
+D    1.023823   -1.259762     ...       -0.497107    0.392765</p>
+</blockquote>
+<p>通过列排序(axis=1是按列排序，axis=0是按行排序):</p>
+<pre><code>import pandas as pd
+import numpy as np
+
+dates = pd.date_range('20190428', periods=7)
+df = pd.DataFrame(np.random.randn(7,4), index=dates, columns=list('ABCD'))
+print(df.sort_index(axis=1, ascending=False))
+
+</code></pre>
+<p>执行结果：</p>
+<blockquote>
+<p>D         C         B         A
+2019-04-28 -0.273003  0.947851  0.932352  1.176102
+2019-04-29 -1.019598 -0.888386 -0.389553  1.336562
+2019-04-30 -0.413300 -0.720200 -0.163324 -0.708393
+2019-05-01  0.570471 -0.865158  0.594230 -0.228372
+2019-05-02  2.094302 -0.300771  0.793344 -0.887120
+2019-05-03 -1.038468 -1.856491  0.036210 -0.815367
+2019-05-04  0.598474 -0.032424 -0.404813 -0.239480</p>
+</blockquote>
+<p>按值排序：</p>
+<pre><code>import pandas as pd
+import numpy as np
+
+dates = pd.date_range('20190428', periods=7)
+df = pd.DataFrame(np.random.randn(7,4), index=dates, columns=list('ABCD'))
+print(df.sort_values(by='A'))
+
+</code></pre>
+<p>执行结果：</p>
+<blockquote>
+<p>A         B         C         D
+2019-05-02 -1.627450 -2.338809  0.646108 -1.115552
+2019-05-04 -1.317502 -0.668964  0.493110 -0.906243
+2019-04-30 -0.571598 -0.605546 -0.802089  0.538439
+2019-04-29 -0.273941 -0.400936  0.572665  1.795079
+2019-04-28  1.391668  0.132553  1.352437 -0.281480
+2019-05-03  1.398801  0.435410  0.134814 -0.680184
+2019-05-01  1.624518  1.496463 -0.663438 -0.828093</p>
+</blockquote>
+<h2 id="选择区块">选择区块</h2>
+<p>注意虽然用于选择和设置的标准Python/Numpy表达式是直观的，可用于交互式工作，但对于生产代码，但建议使用优化的Pandas数据访问方法.at，.iat，.loc，.iloc和.ix。</p>
+<h3 id="获取">获取</h3>
+<p>选择一列，产生一个系列，相当于<code>df.A</code>:</p>
+<pre><code>import pandas as pd
+import numpy as np
+
+dates = pd.date_range('20190428', periods=7)
+df = pd.DataFrame(np.random.randn(7,4), index=dates, columns=list('ABCD'))
+print(df['A'])
+
+</code></pre>
+<p>执行结果：</p>
+<blockquote>
+<p>2019-04-28   -0.547853
+2019-04-29   -0.328144
+2019-04-30    0.153399
+2019-05-01   -0.679229
+2019-05-02    0.701617
+2019-05-03   -0.187678
+2019-05-04   -1.060305
+Freq: D, Name: A, dtype: float64</p>
+</blockquote>
+<p>选择通过<code>[]</code>操作符，选择切片行。</p>
+<pre><code>import pandas as pd
+import numpy as np
+
+dates = pd.date_range('20190428', periods=7)
+df = pd.DataFrame(np.random.randn(7,4), index=dates, columns=list('ABCD'))
+print(df[0:3])
+
+print(&quot;========= 指定选择日期 ========&quot;)
+
+print(df['20190428':'20190429'])
+
+</code></pre>
+<blockquote>
+<p>A         B         C         D
+2019-04-28  0.272721 -0.635245 -0.885228 -0.319419
+2019-04-29 -1.552804 -0.467685  1.196988 -0.044201
+2019-04-30 -1.504417  1.842683 -1.641528  1.138800
+指定选择日期
+A         B         C         D
+2019-04-28  0.272721 -0.635245 -0.885228 -0.319419
+2019-04-29 -1.552804 -0.467685  1.196988 -0.044201</p>
+</blockquote>
+<h3 id="按标签选择">按标签选择</h3>
+<p>获取第一行：</p>
+<pre><code>import pandas as pd
+import numpy as np
+
+dates = pd.date_range('20190428', periods=7)
+df = pd.DataFrame(np.random.randn(7,4), index=dates, columns=list('ABCD'))
+print(df.loc[dates[0]])
+
+</code></pre>
+<p>执行结果：</p>
+<blockquote>
+<p>A    0.167077
+B    1.639464
+C    0.848473
+D    0.128562
+Name: 2019-04-28 00:00:00, dtype: float64</p>
+</blockquote>
+<p>选择某两列：</p>
+<pre><code>import pandas as pd
+import numpy as np
+
+dates = pd.date_range('20190428', periods=7)
+df = pd.DataFrame(np.random.randn(7,4), index=dates, columns=list('ABCD'))
+print(df.loc[:,['A','B']])
+
+</code></pre>
+<p>执行结果：</p>
+<blockquote>
+<p>A B
+2019-04-28 -0.444102 -1.064565
+2019-04-29  0.664678  0.363988
+2019-04-30 -1.911883  0.868151
+2019-05-01  0.632934 -0.555223
+2019-05-02 -0.063530  0.217437
+2019-05-03 -0.687513 -0.702205
+2019-05-04 -1.063643 -1.138780</p>
+</blockquote>
+<p>显示指定列（范围）的两列：</p>
+<pre><code>dates = pd.date_range('20190428', periods=7)
+df = pd.DataFrame(np.random.randn(7,4), index=dates, columns=list('ABCD'))
+print(df.loc['20190429':'201904501',['A','B']])
+
+</code></pre>
+<blockquote>
+<p>A         B
+2019-04-29  1.307342 -0.480007
+2019-04-30 -0.794399 -0.283965
+2019-05-01  0.100102  0.734233</p>
+</blockquote>
+<p>获得标量值：</p>
+<pre><code>import pandas as pd
+import numpy as np
+
+dates = pd.date_range('20190428', periods=7)
+df = pd.DataFrame(np.random.randn(7,4), index=dates, columns=list('ABCD'))
+print(df.loc[dates[0],'A'])
+
+</code></pre>
+<p>执行结果：</p>
+<blockquote>
+<p>0.6902106095876073</p>
+</blockquote>
+<p>快速访问标量，等同于之前的方法：</p>
+<pre><code>import pandas as pd
+import numpy as np
+
+dates = pd.date_range('20190428', periods=7)
+df = pd.DataFrame(np.random.randn(7,4), index=dates, columns=list('ABCD'))
+print(df.at[dates[0],'A'])
+
+</code></pre>
+<p>执行结果：</p>
+<blockquote>
+<p>0.6004013495683793</p>
+</blockquote>
+<h3 id="通过位置选择">通过位置选择</h3>
+<p>通过传递的整数的位置选择：</p>
+<pre><code>import pandas as pd
+import numpy as np
+
+dates = pd.date_range('20190428', periods=7)
+df = pd.DataFrame(np.random.randn(7,4), index=dates, columns=list('ABCD'))
+print(df.iloc[3])
+
+</code></pre>
+<p>执行结果：</p>
+<blockquote>
+<p>A   -0.124701
+B   -1.174938
+C   -0.112210
+D    0.017981
+Name: 2019-05-01 00:00:00, dtype: float64</p>
+</blockquote>
+<p>通过整数切片，类似于numpy/python:</p>
+<pre><code>import pandas as pd
+import numpy as np
+
+dates = pd.date_range('20190428', periods=7)
+df = pd.DataFrame(np.random.randn(7,4), index=dates, columns=list('ABCD'))
+print(df.iloc[3:5,0:2])
+
+</code></pre>
+<blockquote>
+<p>A         B
+2019-05-01 -0.276243 -0.672542
+2019-05-02  0.873244 -0.855431</p>
+</blockquote>
+<p>通过整数位置的列表，类似于numpy/python样式:</p>
+<pre><code>import pandas as pd
+import numpy as np
+
+dates = pd.date_range('20190428', periods=7)
+df = pd.DataFrame(np.random.randn(7,4), index=dates, columns=list('ABCD'))
+print(df.iloc[[1,2,4],[0,2]])
+
+</code></pre>
+<p>执行结果:</p>
+<blockquote>
+<p>A         C
+2019-04-29  0.155747  0.378410
+2019-04-30 -0.405279  1.556128
+2019-05-02 -0.909820 -2.189592</p>
+</blockquote>
+<p>明确切片行:</p>
+<pre><code>import pandas as pd
+import numpy as np
+
+dates = pd.date_range('20190428', periods=7)
+df = pd.DataFrame(np.random.randn(7,4), index=dates, columns=list('ABCD'))
+print(df.iloc[1:3,:])
+
+</code></pre>
+<p>执行结果：</p>
+<blockquote>
+<p>A         B         C         D
+2019-04-29  1.045996 -0.546317 -1.293658 -0.773130
+2019-04-30  0.575449  1.020157  0.277017 -0.072599</p>
+</blockquote>
+<p>明确切片列:</p>
+<pre><code>import pandas as pd
+import numpy as np
+
+dates = pd.date_range('20190428', periods=7)
+df = pd.DataFrame(np.random.randn(7,4), index=dates, columns=list('ABCD'))
+print(df.iloc[:,1:3])
+
+</code></pre>
+<p>执行结果：</p>
+<blockquote>
+<p>B         C
+2019-04-28  0.153790  0.292798
+2019-04-29 -0.203831  0.711814
+2019-04-30 -0.142719  0.400223
+2019-05-01  0.119898 -1.185618
+2019-05-02 -0.328669  1.109864
+2019-05-03  0.215279 -0.767170
+2019-05-04  0.935769 -0.614324</p>
+</blockquote>
+<p>获取明确值：</p>
+<pre><code>import pandas as pd
+import numpy as np
+
+dates = pd.date_range('20190428', periods=7)
+df = pd.DataFrame(np.random.randn(7,4), index=dates, columns=list('ABCD'))
+print(df.iloc[1,1])
+
+</code></pre>
+<p>执行结果：</p>
+<blockquote>
+<p>0.12400409866929067</p>
+</blockquote>
+<p>快速访问标量（等同于之前方法）：</p>
+<pre><code>import pandas as pd
+import numpy as np
+
+dates = pd.date_range('20190428', periods=7)
+df = pd.DataFrame(np.random.randn(7,4), index=dates, columns=list('ABCD'))
+print(df.iat[1,1])
+
+</code></pre>
+<p>执行结果：</p>
+<blockquote>
+<p>0.7498458099785937</p>
+</blockquote>
+<h3 id="布尔索引">布尔索引、</h3>
+<p>通过单列值选择数据：</p>
+<pre><code>import pandas as pd
+import numpy as np
+
+dates = pd.date_range('20190428', periods=7)
+df = pd.DataFrame(np.random.randn(7,4), index=dates, columns=list('ABCD'))
+print(df[df.A &gt; 0])
+
+</code></pre>
+<p>执行结果：</p>
+<blockquote>
+<p>A         B         C         D
+2019-04-28  0.927597  1.372752  1.582596 -1.288195
+2019-05-01  1.192212 -0.763293 -0.823046  0.800922
+2019-05-04  1.193257 -0.393441  2.560778  0.564124</p>
+</blockquote>
+<p>通过DataFrame中的值来选择数据：</p>
+<pre><code>import pandas as pd
+import numpy as np
+
+dates = pd.date_range('20190428', periods=7)
+df = pd.DataFrame(np.random.randn(7,4), index=dates, columns=list('ABCD'))
+print(df[df &gt; 0])
+
+</code></pre>
+<p>执行结果：</p>
+<blockquote>
+<p>A         B         C         D
+2019-04-28       NaN  0.845718       NaN  0.003971
+2019-04-29       NaN  0.390999  1.644006       NaN
+2019-04-30  0.542799       NaN  0.755738  0.627561
+2019-05-01       NaN       NaN  1.032832       NaN
+2019-05-02  1.198393       NaN  0.139890  0.139416
+2019-05-03  0.411127       NaN  0.097083       NaN
+2019-05-04  1.321083       NaN       NaN  1.062388</p>
+</blockquote>
+<p>使用isin()方法进行过滤:</p>
+<pre><code>import pandas as pd
+import numpy as np
+
+dates = pd.date_range('20190428', periods=6)
+df = pd.DataFrame(np.random.randn(6,4), index=dates, columns=list('ABCD'))
+df2 = df.copy()
+df2['E'] = ['one', 'one','two','three','four','three']
+print(df2)
+print(df2[df2['E'].isin(['two','four'])])
+
+</code></pre>
+<p>执行结果：</p>
+<blockquote>
+<p>执行结果：<br>
+A         B         C         D      E
+2019-04-28 -0.473446  0.244217  0.266529 -0.510157    one
+2019-04-29 -0.807459  1.302306  0.344651  0.331388    one
+2019-04-30 -1.009269 -0.118804  0.365774 -0.477622    two
+2019-05-01 -0.482650  0.483304  2.595650  0.783454  three
+2019-05-02  1.248659  0.656070  0.609985  0.839363   four
+2019-05-03  2.553652 -0.381978  0.721041 -0.367775  three
+A         B         C         D     E
+2019-04-30 -1.009269 -0.118804  0.365774 -0.477622   two
+2019-05-02  1.248659  0.656070  0.609985  0.839363  four</p>
+</blockquote>
+
+            </div>
+          </article>
+        </div>
+    
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://BBBigFly.github.io/post/markdown-yu-fa">
+              <h3 class="post-title">
+                Markdown 语法
+              </h3>
+            </a>
+          </div>  
+        
+
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: 'db92909e01994e900fc7',
+    clientSecret: '7b3d46909b38b5fe394415a2c01b8ab7c6b86d30',
+    repo: 'BBBigFly.github.io',
+    owner: 'BBBigFly',
+    admin: ['BBBigFly'],
+    id: location.pathname,      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+
+          
+        
+    
+        <div class="site-footer">
+  Thanks for your support.
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+      </div>
+    </div>
+  </body>
+</html>
